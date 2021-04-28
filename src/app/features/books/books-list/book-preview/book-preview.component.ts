@@ -1,10 +1,10 @@
-  import {Component, Input, ViewEncapsulation} from '@angular/core';
-  import {Book} from '../../../model/index';
+  import {Component, Input} from '@angular/core';
+  import {Book} from '../../../../model/index';
 
   @Component({
-  selector: 'app-book-preview',
+  selector: '[appBookPreview]',
   template: `
-    <div class="card text-center">
+    <!--<div class="card text-center">-->
       <div class="card-body p-2">
         <a [routerLink]="['/books', id, 'details']" class="text-decoration-none text-reset">
           <h5 class="card-title small"><strong>{{ title | trim : 40 }}</strong></h5>
@@ -13,10 +13,9 @@
           <p class="card-text small text-left" *ngIf="searchinfo"  [innerHTML]="searchinfo | safeHtml"></p>
         </a>
       </div>
-    </div>
+    <!--</div>-->
   `,
   styleUrls: ['./book-preview.component.scss'],
-  /*encapsulation: ViewEncapsulation.None,*/
 })
 export class BookPreviewComponent {
 

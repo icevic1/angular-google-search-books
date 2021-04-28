@@ -1,27 +1,28 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Location} from '@angular/common';
-import {Book} from '../../model/index';
+import {Book} from '../../../model/index';
 
 
 @Component({
   selector: 'app-book-details',
   template: `
-    <div *ngIf="book" class="card">
-      <div class="card-body p-2">
-        <h5 class="card-title">
-          <a (click)="toggleFavorite()" class="text-decoration-none pull-right">
-            <i class="fa fa-fw"
-               [ngClass]="{
-                  'fa-star-o': !inFavorites,
-                  'fa-star text-warning': inFavorites
-               }"
-            ></i>
-          </a>
-          <strong>{{ title }}</strong>
-        </h5>
-        <h6 *ngIf="subtitle" class="card-subtitle mb-2 mt-2">{{ subtitle}}</h6>
-        <img class="card-img" *ngIf="thumbnail" [src]="thumbnail" alt="Book card thumb" \>
-        <p class="card-text small text-left" *ngIf="searchinfo" [innerHTML]="searchinfo | safeHtml"></p>
+    <div class="container-fluid mt-3">
+      <div *ngIf="book" class="card border-0">
+        <div class="card-body p-2">
+          <h5 class="card-title">
+            <a (click)="toggleFavorite()" class="text-decoration-none pull-right">
+              <i class="fa fa-fw"
+                 [ngClass]="{
+                    'fa-star-o': !inFavorites,
+                    'fa-star text-warning': inFavorites
+                 }"
+              ></i>
+            </a>
+            <strong>{{ title }}</strong>
+          </h5>
+          <h6 *ngIf="subtitle" class="card-subtitle mb-2 mt-2">{{ subtitle}}</h6>
+          <img class="card-img" *ngIf="thumbnail" [src]="thumbnail" alt="Book card thumb" \>
+          <p class="card-text small text-left" *ngIf="searchinfo" [innerHTML]="searchinfo | safeHtml"></p>
+        </div>
       </div>
     </div>
   `,
@@ -38,8 +39,7 @@ import {Book} from '../../model/index';
 })
 export class BookDetailsComponent {
 
-  constructor(private location: Location) {
-  }
+  constructor() {}
 
   @Input() book: Book;
   @Input() inFavorites: boolean;
@@ -54,9 +54,6 @@ export class BookDetailsComponent {
     }
   }
 
-  /**
-   * Tip: Utilize getters to keep templates clean
-   */
   get id() {
     return this.book.id;
   }
@@ -85,7 +82,4 @@ export class BookDetailsComponent {
     );
   }
 
-  goBack() {
-    this.location.back();
-  }
 }

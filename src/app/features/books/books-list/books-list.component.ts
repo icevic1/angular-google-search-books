@@ -1,14 +1,14 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {Book} from '../../model/index';
+import {Book} from '../../../model/index';
 
 @Component({
   selector: 'app-books-list',
   template: `
     <div class="container-fluid mt-3">
-      <div class="card-columns">
-        <app-book-preview
+      <div class="card-deck">
+        <div appBookPreview class="card text-center mb-3"
           *ngFor="let book of books"
-          [book]="book"></app-book-preview>
+          [book]="book"></div>
       </div>
     </div>
   `,

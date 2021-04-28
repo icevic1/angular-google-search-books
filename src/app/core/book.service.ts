@@ -16,7 +16,7 @@ export class BookService {
   public bookStore: EStore<Book> = new EStore();
   public bookCollection: EStore<Book> = new EStore();
   public books$: Observable<Book[]> = this.bookStore.observe();
-  public collection$: Observable<Book[]> = this.bookCollection.observe();
+  // public collection$: Observable<Book[]> = this.bookCollection.observe();
 
   constructor(private http: HttpClient) {
     this.bookStore.observeQuery().pipe(filter(Boolean),

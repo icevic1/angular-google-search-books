@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { EStore } from '@fireflysemantics/slice';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import {Book} from '../../model/index';
-import {BookService} from '../../core/book.service';
+import {Book} from '../../../model/index';
+import {BookService} from '../../../core/book.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
@@ -13,12 +13,10 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
                 [book]="book"
                 [inFavorites]="isSelectedBookInFavorites$ | async"
                 (add)="toggleCollection()"
-                (remove)="toggleCollection()"></app-book-details>`,
-  styles: [`
-    h1 { font-family: Lato; }
-  `]
+                (remove)="toggleCollection()">
+              </app-book-details>`,
 })
-export class ViewBookComponent implements OnInit {
+export class ViewBookComponent implements OnInit, OnDestroy {
   book: Book;
   isSelectedBookInFavorites$: Observable<boolean>;
 
@@ -27,15 +25,12 @@ export class ViewBookComponent implements OnInit {
 
   bookCollection$ = this.bookService.bookCollection.observe().pipe(untilDestroyed(this));
 
-  // activeBook$ = this.bookService.bookStore.observeActive().pipe(untilDestroyed(this));
-
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService) {}
 
   ngOnInit() {
-    console.log("init:", this.book);
-    this.book = this.route.snapshot.data['book'];
+    this.book = this.route.snapshot.data.book;
     this.bookService.bookStore.clearActive();
     this.bookService.bookStore.addActive(this.book);
     this.isSelectedBookInFavorites$ = this.bookCollection$.pipe(map(() => this.bookCollection.contains(this.book)));
@@ -43,7 +38,7 @@ export class ViewBookComponent implements OnInit {
 
   toggleCollection() {
     this.bookCollection.toggle(this.book);
-    this.isSelectedBookInFavorites$.subscribe(v => console.log(v));
+    this.isSelectedBookInFavorites$.subscribe(v => console.log(v, this.book));
   }
 
   ngOnDestroy() {}

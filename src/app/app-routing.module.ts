@@ -5,7 +5,7 @@ import {HomeComponent} from './features/home/home.component';
 // import {BookDetailsComponent} from "./features/book-details/book-details.component";
 import {BookResolverService} from './core/book-resolver.service';
 import {NotFoundComponent} from './shared/not-found/not-found.component';
-import {ViewBookComponent} from './features/view-book/view-book.component';
+import {ViewBookComponent} from './features/books/view-book/view-book.component';
 import {FavoritesComponent} from './features/favorites/favorites.component';
 
 const routes: Routes = [
