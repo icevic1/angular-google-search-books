@@ -9,7 +9,6 @@ import {BookService} from '../../core/book.service';
         <input [value]="bookService.bookStore.query"
                (keyup)="search($event)"
                (keydown)="resetTimer()"
-               [ngModelOptions]="{standalone: true}"
                autocomplete="off" class="form-control mr-sm-2" type="search" placeholder="Search Books" aria-label="Search" \>
       </form>
     </nav>
@@ -32,7 +31,7 @@ export class HomeComponent {
     clearTimeout(this.typingTimer);
 
     // 13: enter pressed; 8: backspace
-    if (event.keyCode == 13 || (!query && event.keyCode == 8 )) {
+    if (event.keyCode === 13 || (!query && event.keyCode === 8 )) {
       this.bookService.onSearch(query);
     } else {
       this.typingTimer = setTimeout(() => {
