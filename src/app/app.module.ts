@@ -13,6 +13,7 @@ import { TrimmerPipe } from './shared/trimmer.pipe';
 import { SafeHtmlPipe } from './shared/safe-html.pipe';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { ViewBookComponent } from './features/view-book/view-book.component';
+import { FavoritesComponent } from './features/favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ViewBookComponent } from './features/view-book/view-book.component';
     SafeHtmlPipe,
     NotFoundComponent,
     ViewBookComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,

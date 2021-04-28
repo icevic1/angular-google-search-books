@@ -11,7 +11,7 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
   selector: 'app-view-book',
   template: `<app-book-details
                 [book]="book"
-                [inCollection]="isSelectedBookInCollection$ | async"
+                [inFavorites]="isSelectedBookInFavorites$ | async"
                 (add)="toggleCollection()"
                 (remove)="toggleCollection()"></app-book-details>`,
   styles: [`
@@ -20,31 +20,30 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
 })
 export class ViewBookComponent implements OnInit {
   book: Book;
-  isSelectedBookInCollection$: Observable<boolean>;
+  isSelectedBookInFavorites$: Observable<boolean>;
 
   bookStore: EStore<Book> = this.bookService.bookStore;
   bookCollection: EStore<Book> = this.bookService.bookCollection;
 
-  activeBook$ =
-    this.bookService.
-    bookStore.
-    observeActive().pipe(untilDestroyed(this));
+  bookCollection$ = this.bookService.bookCollection.observe().pipe(untilDestroyed(this));
+
+  // activeBook$ = this.bookService.bookStore.observeActive().pipe(untilDestroyed(this));
 
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService) {}
 
   ngOnInit() {
-    this.book = this.route.snapshot.data.book;
     console.log("init:", this.book);
+    this.book = this.route.snapshot.data['book'];
     this.bookService.bookStore.clearActive();
     this.bookService.bookStore.addActive(this.book);
-    this.isSelectedBookInCollection$ = this.activeBook$.pipe(map(() => this.bookCollection.contains(this.book)));
+    this.isSelectedBookInFavorites$ = this.bookCollection$.pipe(map(() => this.bookCollection.contains(this.book)));
   }
 
   toggleCollection() {
     this.bookCollection.toggle(this.book);
-    this.isSelectedBookInCollection$.subscribe(v => console.log(v));
+    this.isSelectedBookInFavorites$.subscribe(v => console.log(v));
   }
 
   ngOnDestroy() {}

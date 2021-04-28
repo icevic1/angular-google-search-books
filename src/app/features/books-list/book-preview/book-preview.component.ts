@@ -6,7 +6,7 @@
   template: `
     <div class="card text-center">
       <div class="card-body p-2">
-        <a [routerLink]="[id, 'details']" class="text-decoration-none text-reset">
+        <a [routerLink]="['/books', id, 'details']" class="text-decoration-none text-reset">
           <h5 class="card-title small"><strong>{{ title | trim : 40 }}</strong></h5>
           <img class="card-img" *ngIf="thumbnail" [src]="thumbnail" alt="Book card thumb" \>
           <h6 class="card-subtitle small mb-2 mt-2" *ngIf="subtitle">{{ subtitle | trim }}</h6>

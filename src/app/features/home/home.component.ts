@@ -21,7 +21,7 @@ import {BookService} from '../../core/book.service';
 export class HomeComponent {
 
   typingTimer;                // timer identifier
-  doneTypingInterval = 1000;  // time in ms, 2 second for example
+  doneTypingInterval = 1000;  // time in ms, 1 second for example
 
   constructor(public bookService: BookService) {}
 
