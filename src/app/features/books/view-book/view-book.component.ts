@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import {Book} from '../../../model/index';
 import {BookService} from '../../../core/book.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
+// import {LocalStorageService} from '../../../core/local-storage.service';
 
 @Component({
   selector: 'app-view-book',
@@ -20,14 +21,15 @@ export class ViewBookComponent implements OnInit, OnDestroy {
   book: Book;
   isSelectedBookInFavorites$: Observable<boolean>;
 
-  bookStore: EStore<Book> = this.bookService.bookStore;
+  // bookStore: EStore<Book> = this.bookService.bookStore;
   bookCollection: EStore<Book> = this.bookService.bookCollection;
 
   bookCollection$ = this.bookService.bookCollection.observe().pipe(untilDestroyed(this));
 
   constructor(
     private route: ActivatedRoute,
-    private bookService: BookService) {}
+    private bookService: BookService,
+    /*private localStorageService: LocalStorageService*/) {}
 
   ngOnInit() {
     this.book = this.route.snapshot.data.book;
@@ -38,7 +40,10 @@ export class ViewBookComponent implements OnInit, OnDestroy {
 
   toggleCollection() {
     this.bookCollection.toggle(this.book);
-    this.isSelectedBookInFavorites$.subscribe(v => console.log(v, this.book));
+    // this.isSelectedBookInFavorites$.subscribe(v => console.log(v, this.book));
+
+    // this.localStorageService.storeOnLocalStorage(this.book.id);
+    // console.log('this.bookCollection:', this.bookCollection);
   }
 
   ngOnDestroy() {}

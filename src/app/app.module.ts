@@ -14,6 +14,8 @@ import { SafeHtmlPipe } from './shared/safe-html.pipe';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { ViewBookComponent } from './features/books/view-book/view-book.component';
 import { FavoritesComponent } from './features/favorites/favorites.component';
+import {StorageServiceModule} from 'ngx-webstorage-service';
+import {LocalStorageService} from './core/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,12 @@ import { FavoritesComponent } from './features/favorites/favorites.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    StorageServiceModule,
   ],
-  providers: [],
+  providers: [
+    LocalStorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
