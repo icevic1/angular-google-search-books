@@ -1,10 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { EStore } from '@fireflysemantics/slice';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import {Book} from "../../model/index";
-import {BookService} from "../../core/book.service";
+import {Book} from '../../model/index';
+import {BookService} from '../../core/book.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
@@ -18,7 +18,7 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
     h1 { font-family: Lato; }
   `]
 })
-export class ViewBookComponent  {
+export class ViewBookComponent implements OnInit {
   book: Book;
   isSelectedBookInCollection$: Observable<boolean>;
 
@@ -36,6 +36,7 @@ export class ViewBookComponent  {
 
   ngOnInit() {
     this.book = this.route.snapshot.data.book;
+    console.log("init:", this.book);
     this.bookService.bookStore.clearActive();
     this.bookService.bookStore.addActive(this.book);
     this.isSelectedBookInCollection$ = this.activeBook$.pipe(map(() => this.bookCollection.contains(this.book)));

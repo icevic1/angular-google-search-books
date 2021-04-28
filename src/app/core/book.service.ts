@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
-import { map, tap, filter, debounceTime, distinctUntilChanged} from "rxjs/operators";
-import { Book } from "../model";
-import { EStore } from "@fireflysemantics/slice";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, tap, filter, debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import { Book } from '../model';
+import { EStore } from '@fireflysemantics/slice';
 
 
 @Injectable({
@@ -11,7 +11,7 @@ import { EStore } from "@fireflysemantics/slice";
 })
 export class BookService {
 
-  private API_PATH = "https://www.googleapis.com/books/v1/volumes";
+  private API_PATH = 'https://www.googleapis.com/books/v1/volumes';
 
   public bookStore: EStore<Book> = new EStore();
   public bookCollection: EStore<Book> = new EStore();
@@ -27,13 +27,11 @@ export class BookService {
         const books: Book[] = await bo.toPromise();
         this.bookStore.reset();
         this.bookStore.postA(books);
-        console.log("post", books);
       })
     ).subscribe();
   }
 
   onSearch(query: string) {
-    console.log("onsearch", query);
     this.bookStore.query = query;
   }
 
