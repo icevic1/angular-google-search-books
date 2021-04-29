@@ -22,6 +22,7 @@ import {Book} from '../../../model/index';
           <h6 *ngIf="subtitle" class="card-subtitle mb-2 mt-2">{{ subtitle}}</h6>
           <img class="card-img" *ngIf="thumbnail" [src]="thumbnail" alt="Book card thumb" \>
           <p class="card-text small text-left" *ngIf="searchinfo" [innerHTML]="searchinfo | safeHtml"></p>
+          <p class="card-text small text-left" *ngIf="description" [innerHTML]="description | safeHtml"></p>
         </div>
       </div>
     </div>
@@ -64,6 +65,10 @@ export class BookDetailsComponent {
 
   get subtitle() {
     return this.book.volumeInfo.subtitle;
+  }
+
+  get description() {
+    return this.book.volumeInfo.description;
   }
 
   get searchinfo(): string | boolean {

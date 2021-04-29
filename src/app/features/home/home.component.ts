@@ -1,5 +1,6 @@
-import { Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookService} from '../../core/book.service';
+import {LocalStorageService} from '../../core/local-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -18,19 +19,29 @@ import {BookService} from '../../core/book.service';
     ></app-books-list>
   `,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   typingTimer;                // timer identifier
   doneTypingInterval = 1000;  // time in ms, 1 second for example
 
-  constructor(public bookService: BookService) {}
+  constructor(
+    public bookService: BookService,
+    private localStorageService: LocalStorageService,
+    ) {}
+
+  ngOnInit() {
+    // restore search query keywords from cache
+    this.bookService.bookStore.query = this.localStorageService.getSearchLocalStorage() || '';
+  }
 
   search(event: any) {
 
     const query: string = event.target.value;
     clearTimeout(this.typingTimer);
 
+    // Implement behavior to catch only events
     // 13: enter pressed; 8: backspace
+    // and do search immediately
     if (event.keyCode === 13 || (!query && event.keyCode === 8 )) {
       this.bookService.onSearch(query);
     } else {

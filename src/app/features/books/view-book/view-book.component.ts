@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import {Book} from '../../../model/index';
 import {BookService} from '../../../core/book.service';
 import {untilDestroyed} from 'ngx-take-until-destroy';
-// import {LocalStorageService} from '../../../core/local-storage.service';
+import {LocalStorageService} from '../../../core/local-storage.service';
 
 @Component({
   selector: 'app-view-book',
@@ -29,21 +29,26 @@ export class ViewBookComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    /*private localStorageService: LocalStorageService*/) {}
+    private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
     this.book = this.route.snapshot.data.book;
     this.bookService.bookStore.clearActive();
     this.bookService.bookStore.addActive(this.book);
-    this.isSelectedBookInFavorites$ = this.bookCollection$.pipe(map(() => this.bookCollection.contains(this.book)));
+    this.isSelectedBookInFavorites$ = this.bookCollection$.pipe(map(() => {
+      // return true if opened book are in favorite list already
+      return this.bookCollection.contains(this.book);
+    }));
+
+    this.bookCollection$.subscribe((e) => {
+      // keep in local chache each change in our favorite list
+      this.localStorageService.setLocalStorage(e);
+    });
   }
 
   toggleCollection() {
     this.bookCollection.toggle(this.book);
     // this.isSelectedBookInFavorites$.subscribe(v => console.log(v, this.book));
-
-    // this.localStorageService.storeOnLocalStorage(this.book.id);
-    // console.log('this.bookCollection:', this.bookCollection);
   }
 
   ngOnDestroy() {}
